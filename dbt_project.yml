@@ -2,7 +2,7 @@
 # Name your project! Project names should contain only lowercase characters
 # and underscores. A good package name should reflect your organization's
 # name or the intended use of these models
-name: 'dbt_de_project'
+name: 'toronto_covid_data_dbt'
 version: '1.0.0'
 config-version: 2
 
@@ -22,7 +22,6 @@ snapshot-paths: ["snapshots"]
 target-path: "target"  # directory which will store compiled SQL files
 clean-targets:         # directories to be removed by `dbt clean`
   - "target"
-  - "dbt_packages"
 
 
 # Configuring models
@@ -32,7 +31,8 @@ clean-targets:         # directories to be removed by `dbt clean`
 # directory as views. These settings can be overridden in the individual model
 # files using the `{{ config(...) }}` macro.
 models:
-  dbt_de_project:
-    # Config indicated by + and applies to all files under models/example/
-    example:
-      +materialized: view
+  toronto_covid_data_dbt:
+    staging:
+      +materialized: table
+    # Config indicated by + and applies to all files under models/core/
+

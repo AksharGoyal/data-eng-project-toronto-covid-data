@@ -1,0 +1,73 @@
+
+version: 2
+
+sources:
+  - name: staging
+    database: de-project-akshar
+    schema: toronto_covid_data
+    tables:
+      - name: ext_partitioned_clustered_covid_toronto_data
+      - name: external_coviddata
+
+models:
+  - name: toronto_covid_dbt
+    description: "Model with toronto covid data"
+    columns:
+      - name: Assigned_ID
+        description: "The primary key for this table, this column may be updated"
+        tests:
+          - unique
+          - not_null
+      - name: Age_Group
+        description: "The age group the case fall under"
+        tests:
+          - accepted_values:
+              values: ['19-', '20-29', '30-39', '40-49', '50-59', '60-69', '70-79', '80-89', '90+']
+      - name: Client_Gender
+        description: "The gender the person identified themselves as"
+        tests:
+          - accepted_values:
+              values: ['MALE', 'FEMALE', 'TRANS MAN', 'TRANS WOMAN', 'TRANSGENDER', 'NON-BINARY', 'UNKNOWN']
+      - name: Neighbourhood
+        description: "The neighbourhood the case came from or the outbreak was in"
+      - name: Postal_District
+        description: "The Forward Sortation Area based on the case's home address"
+        tests:
+          - not_null
+      - name: Source 
+        description: "How the case  acquired COVID-19"
+        tests: 
+          - not_null
+      - name: Outbreak_Associated 
+        description: "Case is either from an outbreak associated area or sporadic"
+        tests: 
+          - accepted_values:
+              values: ['Sporadic', 'Outbreak Associated']
+      - name: Classification 
+        description: "Whether the case is confirmed to be covid case or ir a probable case"
+        tests: 
+          - accepted_values:
+              values: ['CONFIRMED', 'PROBABLE']
+      - name: outcome
+        description: "Does the case still have COVID-19? Has the case recovered? Or the outcome is Fatal?"
+        tests:
+          - accepted_values:
+              values: ['RESOLVED', 'FATAL', 'ACTIVE']
+      - name: Delay_in_Reporting
+        description: "How many days after the Episode date was the case reported?"
+        tests: 
+          - not_negative
+          - not_null
+      - name: Ever_Hospitalized
+        description: "Was the case hospitalized?"
+        tests: 
+          - yes_or_no
+      - name: Ever_In_ICU
+        description: "Was the case ICU?"
+        tests: 
+          - yes_or_no
+      - name: Ever_Intubated
+        description: "Was the case intubated"
+        tests: 
+          - yes_or_no
+

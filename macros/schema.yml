@@ -1,0 +1,36 @@
+version: 2
+
+macros:
+  - name: age_group
+    description: >
+      "This macro receives a Age_group value and returns a shorter description with no spaces."
+    arguments:
+      - name: age
+        type: str
+        description: > 
+          "Age_Group value. Must be one of the accepted values, otherwise the macro will return null"
+
+  - name: update_gender
+    description: >
+      "This macro receives a Client_Gender value and returns same column with all unknown values as one value."
+    arguments:
+      - name: gender
+        type: str
+        description: > 
+          "Client_Gender value. Must be one of the accepted values, otherwise the macro will return null"
+
+  - name: not_negative
+    description: >
+      "This macro receives a model and a column as arguments and returns rows with negative values."
+    arguments:
+      - name: "[model, column]"
+        description: > 
+          "The column must be from the model and have numerical values"
+  
+  - name: yes_or_no
+    description: >
+      "This macro receives a model and a column as arguments and returns rows withvalues neither Yes nor No"
+    arguments:
+      - name: "[model, column]"
+        description: > 
+          "The column must be from the model and have values Yes or No"
