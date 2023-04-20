@@ -18,7 +18,8 @@ macros:
         type: str
         description: > 
           "Client_Gender value. Must be one of the accepted values, otherwise the macro will return null"
-
+          
+tests:
   - name: not_negative
     description: >
       "This macro receives a model and a column as arguments and returns rows with negative values."
