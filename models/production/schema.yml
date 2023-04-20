@@ -2,7 +2,7 @@
 version: 2
 
 sources:
-  - name: staging
+  - name: production
     database: de-project-akshar
     schema: toronto_covid_data
     tables:

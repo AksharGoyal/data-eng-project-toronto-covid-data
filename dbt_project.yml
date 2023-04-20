@@ -32,7 +32,7 @@ clean-targets:         # directories to be removed by `dbt clean`
 # files using the `{{ config(...) }}` macro.
 models:
   toronto_covid_data_dbt:
-    staging:
+    production:
       +materialized: table
     # Config indicated by + and applies to all files under models/core/
 
