@@ -6,7 +6,7 @@ sources:
     database: de-project-akshar
     schema: toronto_covid_data
     tables:
-      - name: ext_partitioned_clustered_covid_toronto_data
+      - name: external_optimized_covid_toronto_data
       - name: external_coviddata
 
 models:

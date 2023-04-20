@@ -10,7 +10,7 @@
 
 
 with toronto_data as (
-    select * from {{ source('production', 'ext_partitioned_clustered_covid_toronto_data') }} order by Episode_Date
+    select * from {{ source('production', 'external_optimized_covid_toronto_data') }} order by Episode_Date
 )
 select 
 
