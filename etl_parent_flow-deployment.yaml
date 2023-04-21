@@ -1,0 +1,62 @@
+###
+### A complete description of a Prefect Deployment for flow 'etl-parent-flow'
+###
+name: GCS to Web Deployment
+description: null
+version: 940ba2ef7044133b177064924a185802
+# The work queue that will handle this deployment's runs
+work_queue_name: default
+work_pool_name: null
+tags: []
+parameters: {"months":[1,2,3,4,5,6,7,8,9,10,11,12], "years":[2020, 2021, 2022, 2023]}
+schedule:
+  cron: 0 23 * * 6
+  timezone: null
+  day_or: true
+is_schedule_active: null
+infra_overrides: {}
+infrastructure:
+  type: process
+  env: {}
+  labels: {}
+  name: null
+  command: null
+  stream_output: true
+  working_dir: null
+  block_type_slug: process
+  _block_type_slug: process
+
+###
+### DO NOT EDIT BELOW THIS LINE
+###
+flow_name: etl-parent-flow
+manifest_path: null
+storage: null
+path: C:\Users\claim\Desktop\DPhi_AIplanet\DataTalks\Data-Enginerring\week_7_project
+entrypoint: web_to_gcs.py:etl_parent_flow
+parameter_openapi_schema:
+  title: Parameters
+  type: object
+  properties:
+    months:
+      title: months
+      default:
+      - 1
+      - 2
+      position: 0
+      type: array
+      items:
+        type: integer
+    years:
+      title: years
+      default:
+      - 2020
+      - 2021
+      - 2022
+      position: 1
+      type: array
+      items:
+        type: integer
+  required: null
+  definitions: null
+timestamp: '2023-04-20T19:22:17.648780+00:00'
