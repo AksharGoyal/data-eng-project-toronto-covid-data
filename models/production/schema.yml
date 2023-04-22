@@ -48,11 +48,19 @@ models:
         tests: 
           - accepted_values:
               values: ['CONFIRMED', 'PROBABLE']
-      - name: outcome
+      - name: Outcome
         description: "Does the case still have COVID-19? Has the case recovered? Or the outcome is Fatal?"
         tests:
           - accepted_values:
               values: ['RESOLVED', 'FATAL', 'ACTIVE']
+      - name: Episode_Date
+        description: "The possible earliest date the virus was acquired"
+        tests:
+          - not_null
+      - name: Reported_Date
+        description: "The date the case was reported on to Toronto Public Health"
+        tests:
+          - not_null
       - name: Delay_in_Reporting
         description: "How many days after the Episode date was the case reported?"
         tests: 
