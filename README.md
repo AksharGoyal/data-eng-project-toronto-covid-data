@@ -46,18 +46,20 @@ In order to replicate this project, you need a GCS account. You can run this pro
 ### GCS & Terraform  
   
 - Assuming you still have the 3-month trial ongoing or a credit card linked to your account, create a new project exclusively for the project (You can continue with an ongoing project if you wish to but to avoid confusion I created a new one).  
-- Next, go to "IAM & Admin > Service Account". Create a service account (name can be of your choice). While creating, grant the account viewer role as a way to access the project. The user access part can be skipped. Your service account is create.
+- Next, go to "IAM & Admin > Service Account". Create a service account (name can be of your choice). While creating, grant the account viewer role as a way to access the project. The user access part can be skipped. Your service account is created.
 - Go to Actions and click on "Manage keys > Add Key > Create New Key". Save the key as a JSON file to your project directory.  
 - Open your project directory in terminal (I recommend Git Bash if you have the option). Run the command `export GOOGLE_APPLICATION_CREDENTIALS="<path/to/your/service-account-authkeys>.json"` (The *<path/...authkeys>* is a placeholder). Then run `gcloud auth application-default login` (if prompted, type Y). We have now our local setup authenticated with the Cloud SDK via OAuth.  
 - Go to "IAM & Admin > IAM" on GCS. for the service account you created, click on "Edit principal" and grant the roles: Storage Admin + Storage Object Admin + BigQuery Admin.  
-<img width="446" alt="Permissioned needed for the service account" src="https://user-images.githubusercontent.com/38995624/233842143-02e39d83-8e2a-4955-84da-9d9931d0e4f2.png">
+<img width="446" alt="Permissions needed for the service account" src="https://user-images.githubusercontent.com/38995624/233842143-02e39d83-8e2a-4955-84da-9d9931d0e4f2.png">
 
 - Enable the APIs: [Identity and Access Managment](https://console.cloud.google.com/apis/library/iam.googleapis.com) and [IAM Service Account Credentials](https://console.cloud.google.com/apis/library/iamcredentials.googleapis.com).
 - Assuming you have terraform installed, we proceed to create GCP Infrastructure. Use the files from my repo. Open your project in a terminal. You can change the variables "data_lake_bucket" and "BQ_DATASET" to your choice of name.  
 - Run the commands `terraform init` to initialize a state, then `terraform plan` and finally `terraform apply` to make and apply changes to the cloud. when running `terraform plan` and `terraform apply`, you will have to provide your GCS project ID ("de-project-akshar" in my case).  
 
 We have created a data lake now where we will store our data.  
-Note: if you feel stuck anywhere, you can watch the video [1.3.1 Introduction to Terraform Concepts & GCP Pre-Requisites](https://youtu.be/Hajwnmj0xfQ) and [1.3.2 Creating GCP Infrastructure with Terraform](https://youtu.be/dNkEgO-CExg) as the steps are similar.
+Note: if you feel stuck anywhere, you can watch the video [1.3.1 Introduction to Terraform Concepts & GCP Pre-Requisites](https://youtu.be/Hajwnmj0xfQ) and [1.3.2 Creating GCP Infrastructure with Terraform](https://youtu.be/dNkEgO-CExg) as the steps are similar.  
+<img width="953" alt="data lake" src="https://user-images.githubusercontent.com/38995624/233858836-10c6d004-e7a0-45b5-ad2b-6684f1af0b9b.png">
+
 
 ### Prefect + Docker: Workflow Orchestration  
 
@@ -65,6 +67,8 @@ In your virtual environment, run the command `pip install -r requirements.txt` t
 We can now begin orchestration via Prefect. For that, we need to create some blocks to reuse configurations and work with GCP. We can do this either through code or through UI. You can use blocks from prefect_blocks folder to create your own blocks with your own credentials (the key you made with your service account). Open the project in VS Code or your choice of IDE. 
  - If you are using code to create blocks, fill the service_account_info with your key and then run `prefect block register -m prefect_gcp` then `python blocks/make_gcp_blocks.py`.  
  - If you are using UI to create blocks, the process is similar to [2.2.3 ETL with GCP & Prefect](https://youtu.be/W-rMz_2GwqQ?t=1452). Creating a block for bigquery is very much same.  
+<img width="698" alt="image" src="https://user-images.githubusercontent.com/38995624/233859002-f9b2cf51-f998-4d70-83d9-644c5b6851f5.png">
+
  - In the `web_to_gcs.py` file, in the `write_gcs` function, write the name of your GCS bucket block in line 30. After that, you can run the file via command `python flows/web_to_gcs.py` to upload data from the site to GCS Bucket.  
  - In the `gcs_to_bq.py` file, in the all the functions that load a bigQueryWarehouse block, write the name of your bigquery bigquery block in the load method. In the main function call, you can uncomment line 80-81 if you wish to create a partition-only table as well to compare with other tables. Run the file via `python flows/gcs_to_bg.py` to upload data from GCS to BigQuery.  
 
@@ -77,6 +81,7 @@ We will be setting schedules via [cron](https://en.wikipedia.org/wiki/Cron) so h
   - We will do similar with the GCS to Bigquery pipeline. Run the command `prefect deployment build flows/gcs_to_bq.py:etl_gcs_to_bq -n "GCS to BQ" --params='{"years":[2020, 2021, 2022, 2023]}' --cron "0 2 * * 4" -a --skip-upload`. The pipeline will run an hour after the pipeline for moving data web to GCS. The flag `-a` is to apply the deployment simultaneously with building it.  
   - Note: you may get a warning regarding no files to be uploaded. You can add the flag `--skip-upload` to avoid the warning.  
   - (Optional) To trigger running a deployment, we need an agent which can be done by the command `prefect agent start  --work-queue "default"`.  
+<img width="946" alt="image" src="https://user-images.githubusercontent.com/38995624/233859200-8661aea3-3d4d-4028-b634-1dbe520ff7b2.png">
 
   We will now run our flows via Docker instead of running it locally.   
    - Make sure you have the Docker files, i.e., Dockerfile, docker-deploy.py and docker-requirements.  
@@ -96,9 +101,12 @@ Additional Note: I really enjoyed learning about Prefect!
 ### DBT  
 
 As my DBT trial account got over and I could not build more than one project in Developer plan, I decided to go out of my comfort zone and try dbt locally. In the same virtual environment, run `pip install -U dbt-core dbt-bigquery`. We can now use dbt-core. The [docs](https://docs.getdbt.com/docs/quickstarts/dbt-core/manual-install) really helped understand dbt-core better.  
-I am 100% not sure how replicating this works so if you have the dbt related folders cloned locally, you can try `dbt run` to see if
+I am 100% not sure how replicating this works so if you have my dbt related folders cloned locally, you can try `dbt run` to see if you are able to create models without any profile or so. Output should be similar to below:  
+<img width="950" alt="DBT run results" src="https://user-images.githubusercontent.com/38995624/233859448-45269880-6c15-4b9e-b184-33035adea744.png">
+
 If you still would like to replicate but via dbt-cloud, just replace the folders with my folders respective to their names (example: replace models with models). Same goes for the files.  
-You may have to setup a profile.yml in ~/.dbt folder in case you face an error. You can get .dbt folder via command `dbt init` and then following along the instructions in the docs. Here how your profile.yml may look like:
+
+In case `dbt run` did not help locally then you may have to setup a profile.yml in ~/.dbt folder. You can get .dbt folder via command `dbt init` and then following along the instructions in the docs linked above. Here is how your profile.yml may look like:
 ```
 dbt_de_project:
   outputs:
@@ -123,11 +131,13 @@ dbt_de_project:
 
 Initially, my plan was to create a view which had all the transformed columns and using that view, I would create a table via `select * from <table_name>`. In the end, I decided to create the table directly.  
 
-Via DBT, I have created a new column called Delay_in_Reporting which calculates the difference between Episode_Date and Reported_Date. I have changed few column names such as FSA to Postal_District to provide more clarity. I have written some unit tests to ensure my columns have the appropriate values. Also, my models retain the partitioning as well as the clustering column from the tables.  
+Via DBT, I have created a new column called Delay_in_Reporting which calculates the difference between Episode_Date and Reported_Date. I have changed few column names such as FSA to Postal_District to provide more clarity. I have written some unit tests to ensure my columns have the appropriate values. The [docs](https://docs.getdbt.com/docs/build/tests) really helped me understand testing better. Also, my models retain the partitioning as well as the clustering column from the tables.  
 
 We will now dive into deploying this. To deploy this, we will need dbt cloud.  
 - Create a project on the cloud and provide the github repo you have created for the dbt project. In the account/project settings, hoose BigQuery as your connection and import your gcp-key.json there to fill in your details. Fill "northamerica-northeast2" in Location. In the Artifacts, choose "Production Run" in the Documentation (this can be done after the next step).  
 - Create an environment called Production. the environment type needs to be deployment Type. Dataset, in my case. would be toronto_covid_data_dbt. We will now create a job.  
+- <img width="841" alt="image" src="https://user-images.githubusercontent.com/38995624/233860055-b80a12c3-46ab-4531-a551-674c649005c3.png">
+
 - Click on Create Job. Choose Production as environment. In Execution settings, make sure to check "Generate docs on run". In the commands, we should have `dbt run --full-refresh` and `dbt test`. For the triggers, we will set schedule via cron: "0 3 * * 4" which is every Thursday at 3 AM.  
 
 Now your DBT will create the models in the BigQuery every Thursday 3 AM. Using the models generated, we can use them to answer questions we have about the data.
