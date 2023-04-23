@@ -135,10 +135,16 @@ Via DBT, I have created a new column called Delay_in_Reporting which calculates 
 
 We will now dive into deploying this. To deploy this, we will need dbt cloud.  
 - Create a project on the cloud and provide the github repo you have created for the dbt project. In the account/project settings, hoose BigQuery as your connection and import your gcp-key.json there to fill in your details. Fill "northamerica-northeast2" in Location. In the Artifacts, choose "Production Run" in the Documentation (this can be done after the next step).  
+<img width="901" alt="Account Settings" src="https://user-images.githubusercontent.com/38995624/233860703-07e9e3ae-ff2a-4bb4-9749-60f3549d315d.png">
+
 - Create an environment called Production. the environment type needs to be deployment Type. Dataset, in my case. would be toronto_covid_data_dbt. We will now create a job.  
-- <img width="841" alt="image" src="https://user-images.githubusercontent.com/38995624/233860055-b80a12c3-46ab-4531-a551-674c649005c3.png">
+<img width="901" alt="Creating Production" src="https://user-images.githubusercontent.com/38995624/233860055-b80a12c3-46ab-4531-a551-674c649005c3.png">
+<img width="901" alt="Production details" src="https://user-images.githubusercontent.com/38995624/233860216-dab26d44-476f-47e8-b839-c34c22acaeca.png">
 
 - Click on Create Job. Choose Production as environment. In Execution settings, make sure to check "Generate docs on run". In the commands, we should have `dbt run --full-refresh` and `dbt test`. For the triggers, we will set schedule via cron: "0 3 * * 4" which is every Thursday at 3 AM.  
+<img width="901" alt="Creating Job~1" src="https://user-images.githubusercontent.com/38995624/233860288-8bace9c3-f71d-4fc6-913c-bb1debdaa070.png">
+<img width="901" alt="Creating Job~2" src="https://user-images.githubusercontent.com/38995624/233860345-2ffe9abf-9cba-4aab-a62a-27522d826eeb.png">
+<img width="901" alt="Creating Job~3" src="https://user-images.githubusercontent.com/38995624/233860392-5e21d835-a18a-486f-a8f8-743840826d2a.png">
 
 Now your DBT will create the models in the BigQuery every Thursday 3 AM. Using the models generated, we can use them to answer questions we have about the data.
 
