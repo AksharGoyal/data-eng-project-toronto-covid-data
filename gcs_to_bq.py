@@ -1,38 +1,17 @@
 from pathlib import Path
 import pandas as pd
 from prefect import flow, task
-from prefect_gcp.cloud_storage import GcsBucket
 from prefect_gcp.bigquery import BigQueryWarehouse
-from prefect_gcp import GcpCredentials
 import shutil
-
-# @task(retries=3)
-# def extract_from_gcs(year: int, month: int) -> Path:
-#     """Download trip data from GCS"""
-#     gcs_path = f"data/{year}/covid-19-toronto-{month:02}-{year}.parquet"
-#     gcs_block = GcsBucket.load("de-project-2023-prefect-block")
-#     gcs_block.get_directory(from_path=gcs_path, local_path=".")
-#     return Path(f"./{gcs_path}")
-
-# @task(retries=3)
-# def write_bq(df: pd.DataFrame) -> None:
-#     """Write DataFrame to BiqQuery"""
-#     gcp_credentials_block = GcpCredentials.load("de-project-gcp-creds")
-    # bigquery_block = BigQueryWarehouse.load('de-project-bigquery-prefect-akshar')
-
-    # df.to_gbq(
-    #     destination_table="toronto_covid_data.toronto_2022_data",
-    #     project_id="de-project-akshar",
-    #     credentials=gcp_credentials_block.get_credentials_from_service_account(),
-    #     chunksize=100_000,
-    #     if_exists="append"
-    # )
 
 @task(retries=3)
 def create_external_table(years):
+    """
+    creates an external table from the data in GCS
+    """
     mapped_years = list(map(lambda year: f'gs://de_toronto_covid_de-project-akshar/data/{year}/covid-19-toronto-*-{year}.parquet', years))
     print(f"Years are mapped as {mapped_years}")
-    with BigQueryWarehouse.load('de-project-bigquery-prefect-akshar') as warehouse:
+    with BigQueryWarehouse.load('de-project-bigquery-prefect-akshar') as warehouse: # your block name in load method
         # operation = """
         # CREATE OR REPLACE EXTERNAL TABLE `de-project-akshar.toronto_covid_data.external_coviddata`
         #     OPTIONS (
@@ -56,8 +35,10 @@ def create_external_table(years):
 
 @task(retries=3)
 def create_external_partitioned_table():
-    
-    with BigQueryWarehouse.load('de-project-bigquery-prefect-akshar') as warehouse:
+    """
+    Creates a partitioned table with Episode_Date as partioning column
+    """
+    with BigQueryWarehouse.load('de-project-bigquery-prefect-akshar') as warehouse: # your block name in load method
         operation = """
             CREATE OR REPLACE TABLE `de-project-akshar.toronto_covid_data.ext_partitioned_coviddata`
             PARTITION BY DATE(`Episode_Date`) AS (
@@ -68,7 +49,12 @@ def create_external_partitioned_table():
 
 @task(retries=3)
 def create_external_partitioned_clustered_table():
-    with BigQueryWarehouse.load('de-project-bigquery-prefect-akshar') as warehouse:
+    """
+    Creates a partitioned table with clustering
+    Partition column: Episode_Date
+    Cluster column: Assigned_ID
+    """
+    with BigQueryWarehouse.load('de-project-bigquery-prefect-akshar') as warehouse: # your block name in load method
         operation = """
             CREATE OR REPLACE TABLE `de-project-akshar.toronto_covid_data.external_optimized_covid_toronto_data`
             PARTITION BY DATE(`Episode_Date`) 
@@ -80,14 +66,21 @@ def create_external_partitioned_clustered_table():
             
 @flow(log_prints=True)
 def etl_gcs_to_bq(years:list[int] = [2020, 2021]):
-    """Main ETL flow to load data into Big Query"""
+    """
+    Main ETL flow to load data from GCS into Big Query;
+    Orchestration will be controlled via params as well
+    """
+    # Unlike the way taught in the zoomcamp, 
+    # I decided to create the external table(s) directly via the prefect_gcp bigquery block
+    # This way I avoided saving data locally and also did things more programatically 
     print("Creating External Table...")
     create_external_table(years)
-    # print("Creating Partitioned Table...")
+    # print("Creating Partitioned Table...") # Not necessary
     # create_external_partitioned_table()
     print("Creating Partitioned + Clustered Table...")
     create_external_partitioned_clustered_table()
-    
+    # Note that we only require the first and the third table created as that's the most optimized one
+    # We can still create other (non-optimized) external tables to compare their performances
 
 if __name__ == "__main__":
     years = [2020 + i for i in range(4)]
