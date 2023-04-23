@@ -1,16 +1,35 @@
 ###
 ### A complete description of a Prefect Deployment for flow 'etl-parent-flow'
 ###
-name: GCS to Web Deployment
-description: null
-version: 940ba2ef7044133b177064924a185802
+name: Web to GCS
+description: The parent flow that will be used later for deployment to control the
+  parameters
+version: 6fe1605a955983e8757e20c93a5505b7
 # The work queue that will handle this deployment's runs
 work_queue_name: default
 work_pool_name: null
 tags: []
-parameters: {"months":[1,2,3,4,5,6,7,8,9,10,11,12], "years":[2020, 2021, 2022, 2023]}
+parameters:
+  months:
+  - 1
+  - 2
+  - 3
+  - 4
+  - 5
+  - 6
+  - 7
+  - 8
+  - 9
+  - 10
+  - 11
+  - 12
+  years:
+  - 2020
+  - 2021
+  - 2022
+  - 2023
 schedule:
-  cron: 0 23 * * 6
+  cron: 0 1 * * 4
   timezone: null
   day_or: true
 is_schedule_active: null
@@ -32,8 +51,8 @@ infrastructure:
 flow_name: etl-parent-flow
 manifest_path: null
 storage: null
-path: C:\Users\claim\Desktop\DPhi_AIplanet\DataTalks\Data-Enginerring\week_7_project
-entrypoint: web_to_gcs.py:etl_parent_flow
+path: C:\Users\claim\Desktop\DPhi_AIplanet\DataTalks\Data-Enginerring\project_test\data-eng-project-toronto-covid-data
+entrypoint: flows\web_to_gcs.py:etl_parent_flow
 parameter_openapi_schema:
   title: Parameters
   type: object
@@ -59,4 +78,4 @@ parameter_openapi_schema:
         type: integer
   required: null
   definitions: null
-timestamp: '2023-04-20T19:22:17.648780+00:00'
+timestamp: '2023-04-23T11:09:21.204983+00:00'

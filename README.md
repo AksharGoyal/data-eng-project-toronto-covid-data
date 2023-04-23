@@ -67,16 +67,16 @@ We can now begin orchestration via Prefect. For that, we need to create some blo
 The following steps are for deploying the pipelines and require Docker. If you have the external tables in BigQuery and would like to move on to DBT, you can skip to the next sections.  
 We will be setting schedules via [cron](https://en.wikipedia.org/wiki/Cron) so here is a quick summary of how to read them:  
 
- - To deploy the pipeline Web to GCS, run the command `prefect deployment build web_to_gcs.py:etl_parent_flow -n "Web to GCS"  --cron "0 1 * * 4"`. The part `web_to_gcs.py:etl_parent_flow` specifies the entrypoint. The name of the deployment will be "Web to GCS". The cron command helps us to set the deployment to run every Thursday 1:00 AM. The data is updated weekly ohence we have setup a weekly schedule.  
+ - To deploy the pipeline Web to GCS, run the command `prefect deployment build flows/web_to_gcs.py:etl_parent_flow -n "Web to GCS"  --cron "0 1 * * 4"`. The part `web_to_gcs.py:etl_parent_flow` specifies the entrypoint. The name of the deployment will be "Web to GCS". The cron command helps us to set the deployment to run every Thursday 1:00 AM. The data is updated weekly ohence we have setup a weekly schedule.  
   - In the YAML file, Specify the parameters for months and years `{"months":[1,2,3,4,5,6,7,8,9,10,11,12], "years":[2020, 2021, 2022, 2023]}`. Also, instead of doing this manually, you can add `--params='{"months":[1,2,3,4,5,6,7,8,9,10,11,12], "years":[2020, 2021, 2022, 2023]}'` to the build command.  
   - To apply the deployment, run the command `prefect deployment apply etl_parent_flow-deployment.yaml` to apply the deployment.  
-  - We will do similar with the GCS to Bigquery pipeline. Run the command `prefect deployment build gcs_to_bq.py:etl_gcs_to_bq -n "GCS to BQ"  --cron "0 2 * * 4"`. The pipeline will run an hour after the pipeline for moving data web to GCS.  
+  - We will do similar with the GCS to Bigquery pipeline. Run the command `prefect deployment build flows/gcs_to_bq.py:etl_gcs_to_bq -n "GCS to BQ" --params='{"years":[2020, 2021, 2022, 2023]}' --cron "0 2 * * 4" -a --skip-upload`. The pipeline will run an hour after the pipeline for moving data web to GCS. The flag `-a` is to apply the deployment simultaneously with building it.  
   - Note: you may get a warning regarding no files to be uploaded. You can add the flag `--skip-upload` to avoid the warning.  
   - (Optional) To trigger running a deployment, we need an agent which can be done by the command `prefect agent start  --work-queue "default"`.  
 
   We will now run our flows via Docker instead of running it locally.  
    - Make sure you have the Docker files, i.e., Dockerfile, docker-deploy.py and docker-requirements.  
-   - If you would like, you can store all prefect-related files in a folder like we did in the zoomcamp. You will have to make changes in Dockerfile accordingly.  
+   - Store all prefect-related files in a folder like we did in the zoomcamp. Store `docker_deploy.py` in it as well.  
    - We will start by building the image `docker image build -t <docker-username>/prefect:<tagname> .` The *docker-username* and *tagname* are placeholders which you will have to replace with your own details. The '.' at the end of the command is not a mistake so be careful not to skip that. In case you face any error, check if you have logged in to Docker via `docker login`.  
    - Run the command `docker image push <username>/prefect:<tagname>` to see your image in Docker.  
    - We will now create a block for docker using the `make_docker_block.py` file. Replace the placeholder for the image param in line 5 with your docker image name you created. You can give your name for the docker block in the save method. Run `python make_docker_block.py` to make the docker block.  
@@ -86,7 +86,7 @@ We will be setting schedules via [cron](https://en.wikipedia.org/wiki/Cron) so h
 
 Additional Note: I really enjoyed learning about Prefect!  
 
-## DBT  
+### DBT  
 
 As my DBT trial account got over and I could not build more than one project in Developer plan, I decided to go out of my comofrt zone and try dbt locally. In the same virtual environment, run `pip install -U dbt-core dbt-bigquery`. We can now use dbt-core.  
 If you still would like to replicate but via dbt-cloud, just replace the folders with my folders respective to their names (example: replace models with models). Same goes for the files.  
@@ -119,3 +119,6 @@ We will now dive into deploying this. To deploy this, we will need dbt cloud.
 - Click on Create Job. Choose Production as environment. In Execution settings, make sure to check "Generate docs on run". In the commands, we should have `dbt run --full-refresh` and `dbt test`. For the triggers, we will set schedule via cron: "0 3 * * 4" which is every Thursday at 3 AM.  
 
 Now your DBT will create the models in the BigQuery every Thursday 3 AM. Using the models generated, we can use them to answer questions we have about the data.
+
+## Data Visualizations  
+I have used Looker Studio for data Visualization. You can find the link to the report [here](https://lookerstudio.google.com/reporting/b51df6f5-5efb-402e-b138-62d1095f8065).  

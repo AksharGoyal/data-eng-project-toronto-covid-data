@@ -1,26 +1,27 @@
 ###
 ### A complete description of a Prefect Deployment for flow 'etl-gcs-to-bq'
 ###
-name: GCS to BigQuery Deployment
-description: Main ETL flow to load data into Big Query
-version: 1041695e77df8df8bf8421ccde946cff
+name: GCS to BQ
+description: |-
+  Main ETL flow to load data from GCS into Big Query;
+  Orchestration will be controlled via params as well
+version: 1f6c7b063e9392397ded1be1d173eb83
 # The work queue that will handle this deployment's runs
 work_queue_name: default
-work_pool_name: default-agent-pool
+work_pool_name: null
 tags: []
-parameters: {"years":[2020, 2021, 2022, 2023]}
+parameters:
+  years:
+  - 2020
+  - 2021
+  - 2022
+  - 2023
 schedule:
-  cron: 30 23 * * 6
+  cron: 0 2 * * 4
   timezone: null
   day_or: true
-is_schedule_active: true
+is_schedule_active: null
 infra_overrides: {}
-
-###
-### DO NOT EDIT BELOW THIS LINE
-###
-flow_name: etl-gcs-to-bq
-manifest_path: null
 infrastructure:
   type: process
   env: {}
@@ -29,14 +30,17 @@ infrastructure:
   command: null
   stream_output: true
   working_dir: null
-  _block_document_id: 90324f81-567e-4aac-bea1-74f4cd192324
-  _block_document_name: anonymous-733f01d2-44a7-4c77-9ffe-0781147f10f3
-  _is_anonymous: true
   block_type_slug: process
   _block_type_slug: process
+
+###
+### DO NOT EDIT BELOW THIS LINE
+###
+flow_name: etl-gcs-to-bq
+manifest_path: null
 storage: null
-path: C:\Users\claim\Desktop\DPhi_AIplanet\DataTalks\Data-Enginerring\week_7_project
-entrypoint: gcs_to_bq.py:etl_gcs_to_bq
+path: C:\Users\claim\Desktop\DPhi_AIplanet\DataTalks\Data-Enginerring\project_test\data-eng-project-toronto-covid-data
+entrypoint: flows\gcs_to_bq.py:etl_gcs_to_bq
 parameter_openapi_schema:
   title: Parameters
   type: object
@@ -52,4 +56,4 @@ parameter_openapi_schema:
         type: integer
   required: null
   definitions: null
-timestamp: '2023-04-20T19:21:28.311079+00:00'
+timestamp: '2023-04-23T11:17:44.212423+00:00'
