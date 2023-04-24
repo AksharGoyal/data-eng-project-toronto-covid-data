@@ -175,4 +175,4 @@ I crated a field called Delay_in_Reporting_Weeks to calculate the delay in terms
 
 ## Conclusion:  
 
-With this, my final project comes to an end. I hope you like it and learn from analysis. If you have any questions regarding replicating this or understanding any tool, feel free to contact me on my email claim.akshar@gmail.com or reach out to me on [LinkedIn](https://www.linkedin.com/in/akshar-goyal-aspiring-data-scientist/). Thank you!  
+With this, my final project comes to an end. I hope you like it and learn a lot from the analysis as well as the tools I used. If you have any questions regarding replicating this or understanding any tool, feel free to contact me on my email claim.akshar@gmail.com or reach out to me on [LinkedIn](https://www.linkedin.com/in/akshar-goyal-aspiring-data-scientist/). Thank you!  
