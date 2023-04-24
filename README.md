@@ -134,7 +134,7 @@ Additional Note: I really enjoyed learning about Prefect!
 
 ### Transformation via DBT  
 
-As my DBT trial account got over and I could not build more than one project in Developer plan, I decided to go out of my comfort zone and try dbt locally. In the same virtual environment, run `pip install -U dbt-core dbt-bigquery`. We can now use dbt-core. The [docs](https://docs.getdbt.com/docs/quickstarts/dbt-core/manual-install) really helped understand dbt-core better.  
+As my DBT trial account got over and I could not build more than one project in Developer plan, I decided to go out of my comfort zone and try dbt locally. In the same virtual environment, run `pip install -U dbt-core dbt-bigquery`. We can now use dbt-core. The [docs](https://docs.getdbt.com/docs/quickstarts/dbt-core/manual-install) really helped understand dbt-core better. You can also use the [instructions](https://github.com/ziritrion/dataeng-zoomcamp/blob/main/notes/4_analytics.md#setting-up-dbt) by the zoomcamp on using dbt-core.  
 I am 100% not sure how replicating this works so if you have my dbt related folders cloned locally, you can try `dbt run` to see if you are able to create models without any profile or so. Output should be similar to below:  
 <img width="650" alt="DBT run results" src="https://user-images.githubusercontent.com/38995624/233859448-45269880-6c15-4b9e-b184-33035adea744.png">
 
