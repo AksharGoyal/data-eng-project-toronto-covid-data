@@ -17,8 +17,10 @@ I really enjoyed learning about data engineering as it has help me grow my progr
  - [Problem Description](#problem-description)  
  - [Data Description](#data-description)  
  - [Replication](#replication)  
-   - [GCS & Terraform](#gcs-terraform)  
-   - [
+   - [GCS & Terraform](#gcp--terraform)  
+   - [Prefect + Docker: Workflow Orchestration](prefect--docker-workflow-orchestration)  
+   - [Transformation via DBT](#transformation-via-dbt)  
+   - [Data Visualizations](data-visualizations)  
 
 ## Problem Description:  
 
@@ -52,7 +54,7 @@ All the columns starting with "Ever_" include cases that are currently hospitali
 ## Replication:  
 In order to replicate this project, you need a GCS account. You can run this project locally. Assuming you have anaconda installed, create a virtual environment using `conda create -n <envname> python=3.9 anaconda` where the envname can be anything you want. I chose python 3.9 as it is the recommended version.
 
-### GCS & Terraform  
+### GCP & Terraform  
   
 - Assuming you still have the 3-month trial ongoing or a credit card linked to your account, create a new project exclusively for the project (You can continue with an ongoing project if you wish to but to avoid confusion I created a new one).  
 - Next, go to "IAM & Admin > Service Account". Create a service account (name can be of your choice). While creating, grant the account viewer role as a way to access the project. The user access part can be skipped. Your service account is created.
@@ -65,7 +67,7 @@ In order to replicate this project, you need a GCS account. You can run this pro
 - Assuming you have terraform installed, we proceed to create GCP Infrastructure. Use the files from my repo. Open your project in a terminal. You can change the variables "data_lake_bucket" and "BQ_DATASET" to your choice of name.  
 - Run the commands `terraform init` to initialize a state, then `terraform plan` and finally `terraform apply` to make and apply changes to the cloud. when running `terraform plan` and `terraform apply`, you will have to provide your GCS project ID ("de-project-akshar" in my case).  
 
-We have created a data lake now where we will store our data.  
+We have created a bucket now where we will store our data.  
 Note: if you feel stuck anywhere, you can watch the video [1.3.1 Introduction to Terraform Concepts & GCP Pre-Requisites](https://youtu.be/Hajwnmj0xfQ) and [1.3.2 Creating GCP Infrastructure with Terraform](https://youtu.be/dNkEgO-CExg) as the steps are similar.  
 <img width="953" alt="data lake" src="https://user-images.githubusercontent.com/38995624/233858836-10c6d004-e7a0-45b5-ad2b-6684f1af0b9b.png">
 
@@ -107,7 +109,7 @@ We will be setting schedules via [cron](https://en.wikipedia.org/wiki/Cron) so h
 Note: in case you get stuck, the [video from zoomcamp on deployment](https://youtu.be/psNSzqTsi-s?t=392) can help you understand the deployment better.  
 Additional Note: I really enjoyed learning about Prefect!  
 
-### DBT  
+### Transformation via DBT  
 
 As my DBT trial account got over and I could not build more than one project in Developer plan, I decided to go out of my comfort zone and try dbt locally. In the same virtual environment, run `pip install -U dbt-core dbt-bigquery`. We can now use dbt-core. The [docs](https://docs.getdbt.com/docs/quickstarts/dbt-core/manual-install) really helped understand dbt-core better.  
 I am 100% not sure how replicating this works so if you have my dbt related folders cloned locally, you can try `dbt run` to see if you are able to create models without any profile or so. Output should be similar to below:  
