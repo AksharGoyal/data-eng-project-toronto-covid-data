@@ -2,6 +2,8 @@
 
 ## Introduction:  
 
+<img width="750" alt="Architecture" src="https://user-images.githubusercontent.com/38995624/234061736-29d900a2-ef2b-4392-ab40-69c81c10744e.png">  
+
 This project was created as part of DataTalks' Data Engineering zoomcamp final assignment. The tools used are:  
  - Data Lake: Google Cloud Storage  
  - Data Warehouse: BigQuery  
