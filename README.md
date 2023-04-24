@@ -62,7 +62,7 @@ In order to replicate this project, you need a GCS account. You can run this pro
 - Open your project directory in terminal (I recommend Git Bash if you have the option). Run the command `export GOOGLE_APPLICATION_CREDENTIALS="<path/to/your/service-account-authkeys>.json"` (The *<path/...authkeys>* is a placeholder). Then run `gcloud auth application-default login` (if prompted, type Y). We have now our local setup authenticated with the Cloud SDK via OAuth.  
 - Go to "IAM & Admin > IAM" on GCS. for the service account you created, click on "Edit principal" and grant the roles: Storage Admin + Storage Object Admin + BigQuery Admin.  
 <div style="text-align:center">
-<img width="450" alt="Permissions needed for the service account" src="https://user-images.githubusercontent.com/38995624/233842143-02e39d83-8e2a-4955-84da-9d9931d0e4f2.png"></div>
+<img width="450" alt="Permissions needed for the service account" src="https://user-images.githubusercontent.com/38995624/233842143-02e39d83-8e2a-4955-84da-9d9931d0e4f2.png" /></div>
 
 - Enable the APIs: [Identity and Access Managment](https://console.cloud.google.com/apis/library/iam.googleapis.com) and [IAM Service Account Credentials](https://console.cloud.google.com/apis/library/iamcredentials.googleapis.com).
 - Assuming you have terraform installed, we proceed to create GCP Infrastructure. Use the files from my repo. Open your project in a terminal. You can change the variables "data_lake_bucket" and "BQ_DATASET" to your choice of name.  
