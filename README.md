@@ -3,11 +3,11 @@
 ## Introduction:  
 
 This project was created as part of DataTalks' Data Engineering zoomcamp final assignment. The tools used are:  
- - Cloud: GCP  
+ - Data Lake: Google Cloud Storage  
+ - Data Warehouse: BigQuery  
  - IaC: Terraform  
  - Workflow Orchestration: Prefect  
  - Containerization: Docker  
- - Data Warehouse: BigQuery  
  - Transformation: DBT  
  - Data Visualization: Looker Studio  
 
@@ -55,7 +55,12 @@ These details can be found in [schema.yml](https://github.com/AksharGoyal/data-e
 All the columns starting with "Ever_" include cases that are currently hospitalized, deceased or discharged. The Delay_in_Reporting column was not provided in the original dataset; it had to be created. 
 
 ## Replication:  
-In order to replicate this project, you need a GCS account. You can run this project locally. Assuming you have anaconda installed, create a virtual environment using `conda create -n <envname> python=3.9 anaconda` where the envname can be anything you want. I chose python 3.9 as it is the recommended version.
+In order to replicate this project, you need a GCS account. You can run this project locally. Assuming you have anaconda installed, create a virtual environment using `conda create -n <envname> python=3.9 anaconda` where the envname can be anything you want. I chose python 3.9 as it is the recommended version. We will use  
+ - GCP to store the data. For that, we will set it up using Terraform.  
+ - Prefect to create pipelines to extract data from web to GCS and then from GCS to BigQuery.  
+ - Docker to contain the deployments of these pipelines.  
+ - DBT to transform the data and ensure it passes basic tests  
+ - Looker Studio to visualize the data  
 
 ### GCP & Terraform  
   
