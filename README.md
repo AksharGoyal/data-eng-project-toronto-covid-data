@@ -55,7 +55,7 @@ These details can be found in [schema.yml](https://github.com/AksharGoyal/data-e
 All the columns starting with "Ever_" include cases that are currently hospitalized, deceased or discharged. The Delay_in_Reporting column was not provided in the original dataset; it had to be created. 
 
 ## Replication:  
-In order to replicate this project, you need a GCS account. You can run this project locally. Assuming you have anaconda installed, create a virtual environment using `conda create -n <envname> python=3.9 anaconda` where the envname can be anything you want. I chose python 3.9 as it is the recommended version. We will use  
+In order to replicate this project, you need a GCS account. You can run this project locally. Assuming you have anaconda installed, create a virtual environment using `conda create -n <envname> python=3.9` where the envname can be anything you want. I chose python 3.9 as it is the recommended version. We will use  
  - GCP to store the data. For that, we will set it up using Terraform.  
  - Prefect to create pipelines to extract data from web to GCS and then from GCS to BigQuery.  
  - Docker to contain the deployments of these pipelines.  
@@ -76,8 +76,24 @@ In order to replicate this project, you need a GCS account. You can run this pro
 
 We have created a bucket now where we will store our data.  
 Note: if you feel stuck anywhere, you can watch the video [1.3.1 Introduction to Terraform Concepts & GCP Pre-Requisites](https://youtu.be/Hajwnmj0xfQ) and [1.3.2 Creating GCP Infrastructure with Terraform](https://youtu.be/dNkEgO-CExg) as the steps are similar.  
-<img width="500" alt="data lake" src="https://user-images.githubusercontent.com/38995624/233858836-10c6d004-e7a0-45b5-ad2b-6684f1af0b9b.png">
-
+<img width="500" alt="data lake" src="https://user-images.githubusercontent.com/38995624/233858836-10c6d004-e7a0-45b5-ad2b-6684f1af0b9b.png">  
+The structure of our folder in the lake will be as follows:  
+```
+Buckat_Name:
+       - data:  
+          - 2020:  
+              - covid-19-toronto-01-2020.parquet  
+              - covid-19-toronto-01-2020.csv.gz  
+              - covid-19-toronto-02-2020.parquet  
+              - covid-19-toronto-02-2020.csv.gz
+              :
+              - covid-19-toronto-12-2020.parquet  
+              - covid-19-toronto-12-2020.csv.gz  
+          - 2021:  
+          - 2022:  
+          - 2023:
+          :
+```
 
 ### Prefect + Docker: Workflow Orchestration  
 
@@ -90,7 +106,7 @@ We can now begin orchestration via Prefect. For that, we need to create some blo
  - In the `web_to_gcs.py` file, in the `write_gcs` function, write the name of your GCS bucket block in line 30. After that, you can run the file via command `python flows/web_to_gcs.py` to upload data from the site to GCS Bucket.  
  - In the `gcs_to_bq.py` file, in the all the functions that load a bigQueryWarehouse block, write the name of your bigquery bigquery block in the load method. In the main function call, you can uncomment line 80-81 if you wish to create a partition-only table as well to compare with other tables. Run the file via `python flows/gcs_to_bg.py` to upload data from GCS to BigQuery.  
 
-The following steps are for deploying the pipelines and require Docker. If you have the external tables in BigQuery and would like to move on to DBT, you can skip to the next sections.  
+The following steps are for deploying the pipelines and require Docker. If you have the external tables in BigQuery and would like to move on to DBT, you can skip to the next sections. When deploying and running the pipelines, we can decide which month and year's data we want to keep in our Cloud and which year's data we want to use in BigQuery.  
 We will be setting schedules via [cron](https://en.wikipedia.org/wiki/Cron) so here is a quick summary of how to read them:  
 
  - To deploy the pipeline Web to GCS, run the command `prefect deployment build flows/web_to_gcs.py:etl_parent_flow -n "Web to GCS"  --cron "0 1 * * 4"`. The part `web_to_gcs.py:etl_parent_flow` specifies the entrypoint. The name of the deployment will be "Web to GCS". The cron command helps us to set the deployment to run every Thursday 1:00 AM. The data is updated weekly ohence we have setup a weekly schedule.  
