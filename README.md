@@ -161,7 +161,8 @@ Now your DBT will create the models in the BigQuery every Thursday 3 AM. Using t
 ## Data Visualizations  
 I have used Looker Studio for Data Visualization. You can find the link to the report [here](https://lookerstudio.google.com/reporting/b51df6f5-5efb-402e-b138-62d1095f8065).  
 
-From the below pie chart, excluding sources such as "No Information" and "Pending", we observe that Community and Household Contact were the top two reasons for the most spread of the virus, from the onset of COVID-19 till now. As these two reasons are not exactly avoidable to stop the spread, we observe that the thid reason, outbreaks in healthcare situations, is the next reason behind the infection which is also suggested on the source of the data. We also see that overall people below 40 were affected by the virus which may make sense as these age groups tend to be more involved in community events.  
+From the below pie chart, excluding sources such as "No Information" and "Pending", we observe that Community and Household Contact were the top two reasons for the most spread of the virus, from the onset of COVID-19 till now. As these two reasons are not exactly avoidable to stop the spread, we observe that the thid reason, outbreaks in healthcare situations, is the next reason behind the infection which is also suggested on the source of the data.  
+We also see that overall people below age of 40 were affected by the virus which may make sense as these age groups tend to be more involved in community events.  
 <img width="500" alt="image" src="https://user-images.githubusercontent.com/38995624/233862055-dd74bda4-ecf7-498b-aa79-08a3649a1e29.png">
 
 Considering only this year, Outbreaks in healthcare situations is the top reason followed by Community where the senior citizens are affected the most.  
