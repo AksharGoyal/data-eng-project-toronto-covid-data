@@ -183,7 +183,7 @@ We will now dive into deploying this. To deploy this, we will need dbt cloud.
 Now your DBT will create the models in the BigQuery every Thursday 3 AM. Using the models generated, we can use them to answer questions we have about the data.
 
 ### Data Visualizations  
-I have used Looker Studio for Data Visualization. You can find the link to the report [here](https://lookerstudio.google.com/s/v0ywTwnb7sE).  
+I have used Looker Studio for Data Visualization. You can find the link to the report [here](https://lookerstudio.google.com/s/v0ywTwnb7sE). If you are trying to connect data sources from your own Warehouse to Looker Studio, make sure the dimension Assigned_ID has no default aggregation.  
 
 From the below pie chart, excluding sources such as "No Information" and "Pending", we observe that Community and Household Contact were the top two reasons for the most spread of the virus, from the onset of COVID-19 till now. As these two reasons are not exactly avoidable to stop the spread, we observe that the thid reason, outbreaks in healthcare situations, is the next reason behind the infection which is also suggested on the source of the data.  
 We also see that overall people below age of 40 were affected by the virus which may make sense as these age groups tend to be more involved in community events.  
