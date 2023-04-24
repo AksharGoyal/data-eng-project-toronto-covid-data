@@ -168,7 +168,7 @@ We also see that overall people below age of 40 were affected by the virus which
 Considering only this year, Outbreaks in healthcare situations is the top reason followed by Community where the senior citizens are affected the most.  
 <img width="500" alt="Pie chart about source of infection in 2023 only" src="https://user-images.githubusercontent.com/38995624/233862106-0a57588a-167e-463d-8342-c96d29733441.png">  
 
-Finally from the time series chart we see that frequent delays in reporting, at least 4 weeks, happen around summer vacation or christmas holidays. Other possible reasons are arrival of COVID-19 or its mutation.  
+Finally from the time series chart we see that frequent delays in reporting, at least 4 weeks, happen around summer vacation or christmas holidays. Other possible reasons are arrival of COVID-19 or its mutation. This is again with sources "No Information" and "Pending" excluded as those data points were creating outliers.  
 I crated a field called Delay_in_Reporting_Weeks to calculate the delay in terms of weeks. Usually quarantining after contacting people is recommended, for about a week or two. Hence I decided to add a week based field to keep things consistent with it.
 
 <img width="500" alt="image" src="https://user-images.githubusercontent.com/38995624/233983574-874c52dd-d4b6-47f1-8df9-8df47c4473e6.png">
