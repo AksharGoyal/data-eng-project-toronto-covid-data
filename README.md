@@ -159,15 +159,20 @@ We will now dive into deploying this. To deploy this, we will need dbt cloud.
 Now your DBT will create the models in the BigQuery every Thursday 3 AM. Using the models generated, we can use them to answer questions we have about the data.
 
 ## Data Visualizations  
-I have used Looker Studio for Data Visualization. You can find the link to the report [here](https://lookerstudio.google.com/reporting/b51df6f5-5efb-402e-b138-62d1095f8065).  
+I have used Looker Studio for Data Visualization. You can find the link to the report [here]([https://lookerstudio.google.com/reporting/b51df6f5-5efb-402e-b138-62d1095f8065](https://lookerstudio.google.com/s/vjdlfTcvouo).  
 
 From the below pie chart, excluding sources such as "No Information" and "Pending", we observe that Community and Household Contact were the top two reasons for the most spread of the virus, from the onset of COVID-19 till now. As these two reasons are not exactly avoidable to stop the spread, we observe that the thid reason, outbreaks in healthcare situations, is the next reason behind the infection which is also suggested on the source of the data.  
 We also see that overall people below age of 40 were affected by the virus which may make sense as these age groups tend to be more involved in community events.  
-<img width="500" alt="image" src="https://user-images.githubusercontent.com/38995624/233862055-dd74bda4-ecf7-498b-aa79-08a3649a1e29.png">
+<img width="500" alt="Pie chart about source of infection" src="https://user-images.githubusercontent.com/38995624/233862055-dd74bda4-ecf7-498b-aa79-08a3649a1e29.png">
 
 Considering only this year, Outbreaks in healthcare situations is the top reason followed by Community where the senior citizens are affected the most.  
-<img width="500" alt="image" src="https://user-images.githubusercontent.com/38995624/233862106-0a57588a-167e-463d-8342-c96d29733441.png">
+<img width="500" alt="Pie chart about source of infection in 2023 only" src="https://user-images.githubusercontent.com/38995624/233862106-0a57588a-167e-463d-8342-c96d29733441.png">  
 
+Finally from the time series chart we see that frequent delays in reporting, at least 4 weeks, happen around summer vacation or christmas holidays. Other possible reasons are arrival of COVID-19 or its mutation.  
+I crated a field called Delay_in_Reporting_Weeks to calculate the delay in terms of weeks. Usually quarantining after contacting people is recommended, for about a week or two. Hence I decided to add a week based field to keep things consistent with it.
 
+<img width="500" alt="image" src="https://user-images.githubusercontent.com/38995624/233983574-874c52dd-d4b6-47f1-8df9-8df47c4473e6.png">
 
+## Conclusion:  
 
+With this, my final project comes to an end. I hope you like it and learn from analysis. If you have any questions regarding replicating this or understanding any tool, feel free to contact me on my email claim.akshar@gmail.com or reach out to me on [LinkedIn](https://www.linkedin.com/in/akshar-goyal-aspiring-data-scientist/). Thank you!  
