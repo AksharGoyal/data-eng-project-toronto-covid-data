@@ -159,7 +159,7 @@ We will now dive into deploying this. To deploy this, we will need dbt cloud.
 Now your DBT will create the models in the BigQuery every Thursday 3 AM. Using the models generated, we can use them to answer questions we have about the data.
 
 ### Data Visualizations  
-I have used Looker Studio for Data Visualization. You can find the link to the report [here]([https://lookerstudio.google.com/reporting/b51df6f5-5efb-402e-b138-62d1095f8065](https://lookerstudio.google.com/s/vjdlfTcvouo).  
+I have used Looker Studio for Data Visualization. You can find the link to the report [here](https://lookerstudio.google.com/s/v0ywTwnb7sE).  
 
 From the below pie chart, excluding sources such as "No Information" and "Pending", we observe that Community and Household Contact were the top two reasons for the most spread of the virus, from the onset of COVID-19 till now. As these two reasons are not exactly avoidable to stop the spread, we observe that the thid reason, outbreaks in healthcare situations, is the next reason behind the infection which is also suggested on the source of the data.  
 We also see that overall people below age of 40 were affected by the virus which may make sense as these age groups tend to be more involved in community events.  
@@ -171,7 +171,7 @@ Considering only this year, Outbreaks in healthcare situations is the top reason
 Finally from the time series chart we see that frequent delays in reporting, at least 4 weeks, happen around summer vacation or christmas holidays. Other possible reasons are arrival of COVID-19 or its mutation. This is again with sources "No Information" and "Pending" excluded as those data points were creating outliers.  
 I crated a field called Delay_in_Reporting_Weeks to calculate the delay in terms of weeks. Usually quarantining after contacting people is recommended, for about a week or two. Hence I decided to add a week based field to keep things consistent with it.
 
-<img width="500" alt="image" src="https://user-images.githubusercontent.com/38995624/233983574-874c52dd-d4b6-47f1-8df9-8df47c4473e6.png">
+<img width="500" alt="time series graph" src="https://user-images.githubusercontent.com/38995624/233983574-874c52dd-d4b6-47f1-8df9-8df47c4473e6.png">
 
 ## Conclusion:  
 
