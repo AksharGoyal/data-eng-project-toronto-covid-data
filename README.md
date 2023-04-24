@@ -18,9 +18,9 @@ I really enjoyed learning about data engineering as it has help me grow my progr
  - [Data Description](#data-description)  
  - [Replication](#replication)  
    - [GCS & Terraform](#gcp--terraform)  
-   - [Prefect + Docker: Workflow Orchestration](prefect--docker-workflow-orchestration)  
+   - [Prefect + Docker: Workflow Orchestration](#prefect--docker-workflow-orchestration)  
    - [Transformation via DBT](#transformation-via-dbt)  
-   - [Data Visualizations](data-visualizations)  
+   - [Data Visualizations](#data-visualizations)  
 
 ## Problem Description:  
 
