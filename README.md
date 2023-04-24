@@ -50,6 +50,7 @@ The final dataset after the transformation has the following columns:
 |Ever_Hospitalized| Cases that were hospitalized due to COVID-19|  
 |Ever_in_ICU| Cases admitted to ICU due to the virus|  
 |Ever_Intubated| Cases that had a tube inserted for ventilation due to COVID-19|  
+
 These details can be found in [schema.yml](https://github.com/AksharGoyal/data-eng-project-toronto-covid-data/blob/main/models/production/schema.yml) in models/production folder as well as on the website of the source of data.  
 All the columns starting with "Ever_" include cases that are currently hospitalized, deceased or discharged. The Delay_in_Reporting column was not provided in the original dataset; it had to be created. 
 
