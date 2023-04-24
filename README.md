@@ -14,10 +14,11 @@ This project was created as part of DataTalks' Data Engineering zoomcamp final a
 I really enjoyed learning about data engineering as it has help me grow my programming skills as well as my knowledge about various tools. Working on this project helped me improve my debugging skills as well as self-learning from docs. I am thankful to the instructors of this zoomcamp as well as the Slack community for helping me whenver I got stuck. This was my third time trying out a zoomcamp by DataTalks and I am glad I was able to work till the end as the previous two times I had to drop out due to academic commitments. Thank you :)  
 
 ## Index:  
- - [Problem Description](##problem-description)  
- - [Data Description](##data-description)  
- - [Replication](##replication)  
-  - [GCS & Terraform](###gcs-terraform)
+ - [Problem Description](#problem-description)  
+ - [Data Description](#data-description)  
+ - [Replication](#replication)  
+   - [GCS & Terraform](#gcs-terraform)  
+   - [
 
 ## Problem Description:  
 
