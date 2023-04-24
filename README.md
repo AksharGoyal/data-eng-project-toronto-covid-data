@@ -15,7 +15,9 @@ I really enjoyed learning about data engineering as it has help me grow my progr
 
 ## Index:  
  - [Problem Description](##problem-description)  
- - 
+ - [Data Description](##data-description)  
+ - [Replication](##replication)  
+  - [GCS & Terraform](###gcs-terraform)
 
 ## Problem Description:  
 
